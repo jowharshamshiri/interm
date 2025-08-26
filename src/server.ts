@@ -2969,5 +2969,13 @@ export class InterMServer {
   }
 }
 
-const server = new InterMServer();
-server.run().catch(console.error);
+// Export factory function for CLI usage
+export function createServer(): InterMServer {
+  return new InterMServer();
+}
+
+// Run server if executed directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const server = new InterMServer();
+  server.run().catch(console.error);
+}
