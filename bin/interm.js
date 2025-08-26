@@ -9,4 +9,4 @@ const { createServer } = await import('../dist/server.js');
 
 // Create and start the InTerm server
 const server = createServer();
-server.connect();
+server.run().catch(console.error);
