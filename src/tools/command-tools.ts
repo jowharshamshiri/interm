@@ -17,10 +17,10 @@ export const commandTools: Tool[] = [
         },
         timeout: {
           type: 'number',
-          description: 'Timeout in milliseconds',
-          default: 30000,
-          minimum: 1000,
-          maximum: 300000
+          description: 'Timeout in milliseconds (0 for no timeout)',
+          default: 60000,
+          minimum: 0,
+          maximum: 0
         },
         expectOutput: {
           type: 'boolean',

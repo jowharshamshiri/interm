@@ -144,6 +144,8 @@ export class InterMServer {
         return this.getTerminalBuffer(args);
       case 'watch_terminal_output':
         return this.watchTerminalOutput(args);
+      case 'recover_session':
+        return this.recoverSession(args);
 
       // Keyboard interaction tools
       case 'send_function_keys':
@@ -520,19 +522,22 @@ export class InterMServer {
     const sessionId = args.sessionId as string;
     const includeFormatting = args.includeFormatting as boolean;
     const lastNLines = args.lastNLines as number;
+    const maxTokens = args.maxTokens as number;
+    
+    const result = await this.terminalManager.getTerminalContent(sessionId, {
+      lastNLines,
+      maxTokens,
+      includeFormatting
+    });
     
     const state = await this.terminalManager.getTerminalState(sessionId);
-    
-    let content = state.content;
-    if (lastNLines) {
-      const lines = content.split('\n');
-      content = lines.slice(-lastNLines).join('\n');
-    }
     
     return {
       success: true,
       data: {
-        content,
+        content: result.content,
+        truncated: result.truncated,
+        totalLines: result.totalLines,
         cursor: state.cursor,
         dimensions: state.dimensions,
         ...(includeFormatting && { attributes: state.attributes })
@@ -635,6 +640,30 @@ export class InterMServer {
       
       checkOutput();
     });
+  }
+
+  private async recoverSession(args: Record<string, unknown>): Promise<ToolResult> {
+    const sessionId = args.sessionId as string;
+    
+    try {
+      await this.terminalManager.recoverSession(sessionId);
+      return {
+        success: true,
+        data: {
+          message: `Session ${sessionId} recovered successfully`,
+          sessionId,
+          timestamp: new Date()
+        }
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: {
+          type: 'RECOVERY_ERROR',
+          message: `Failed to recover session: ${error instanceof Error ? error.message : String(error)}`
+        }
+      };
+    }
   }
 
   // Keyboard interaction methods

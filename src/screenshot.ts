@@ -147,11 +147,25 @@ export class TerminalScreenshot {
   }
 
   private static escapeXml(text: string): string {
-    return text
+    // First, remove ANSI escape sequences that cause XML parsing issues
+    const cleanText = this.stripAnsiSequences(text);
+    
+    return cleanText
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
-      .replace(/'/g, '&apos;');
+      .replace(/'/g, '&apos;')
+      // Remove any remaining control characters that could corrupt XML
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+  }
+
+  private static stripAnsiSequences(text: string): string {
+    // Remove ANSI escape sequences: ESC[...m (colors), ESC[...J (clear), ESC[...H (cursor), etc.
+    return text
+      .replace(/\x1b\[[0-9;]*[A-Za-z]/g, '') // Standard ANSI escape sequences
+      .replace(/\x1b\][0-9]*;[^\x07]*\x07/g, '') // OSC sequences
+      .replace(/\x1b[PX^_][^\x1b]*\x1b\\/g, '') // String terminators
+      .replace(/\x1b./g, ''); // Any remaining escape sequences
   }
 }

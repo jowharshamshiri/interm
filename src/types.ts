@@ -50,6 +50,7 @@ export type TerminalErrorType =
   | 'PARSING_ERROR'
   | 'RESOURCE_ERROR'
   | 'INVALID_PARAMETER'
+  | 'RECOVERY_ERROR'
   | 'UNKNOWN_ERROR';
 
 export class TerminalAutomationError extends Error {
@@ -108,6 +109,7 @@ export interface CommandResult {
   duration: number;
   command: string;
   timestamp: Date;
+  isInteractive?: boolean;
 }
 
 // Enhanced interaction types

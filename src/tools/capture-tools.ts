@@ -21,6 +21,13 @@ export const captureTools: Tool[] = [
           description: 'Only return the last N lines of output',
           minimum: 1,
           maximum: 1000
+        },
+        maxTokens: {
+          type: 'number',
+          description: 'Maximum tokens to return (for large outputs)',
+          default: 20000,
+          minimum: 1000,
+          maximum: 25000
         }
       },
       required: ['sessionId']
@@ -115,6 +122,20 @@ export const captureTools: Tool[] = [
           default: 30000,
           minimum: 1000,
           maximum: 300000
+        }
+      },
+      required: ['sessionId']
+    }
+  },
+  {
+    name: 'recover_session',
+    description: 'Recover a stuck or corrupted terminal session',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        sessionId: {
+          type: 'string',
+          description: 'Terminal session ID to recover'
         }
       },
       required: ['sessionId']

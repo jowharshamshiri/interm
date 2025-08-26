@@ -1,32 +1,13 @@
 {
-  "name": "interm-mcp",
-  "version": "0.1.0",
-  "description": "MCP server for terminal applications and TUI automation with 127 tools",
-  "type": "module",
-  "main": "dist/server.js",
+  "author": {
+    "email": "jowharshamshiri@gmail.com",
+    "name": "Bahram Shamshiri"
+  },
   "bin": {
     "interm-mcp": "./bin/interm.js"
   },
-  "files": [
-    "dist/",
-    "bin/",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsx src/server.ts",
-    "start": "node dist/server.js",
-    "test": "node tests/run-tests.js",
-    "test:unit": "node tests/run-tests.js --category unit",
-    "test:integration": "node tests/run-tests.js --category integration",  
-    "test:e2e": "node tests/run-tests.js --category e2e",
-    "test:watch": "node --watch tests/run-tests.js",
-    "test:verbose": "node tests/run-tests.js --verbose",
-    "lint": "eslint src/",
-    "format": "prettier --write src/",
-    "clean": "rm -rf dist/",
-    "prepublishOnly": "npm run build"
+  "bugs": {
+    "url": "https://github.com/jowharshamshiri/interm/issues"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.5.0",
@@ -34,6 +15,7 @@
     "sharp": "^0.33.0",
     "uuid": "^10.0.0"
   },
+  "description": "MCP server for terminal applications and TUI automation with 127 tools",
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/uuid": "^10.0.0",
@@ -44,6 +26,20 @@
     "tsx": "^4.16.0",
     "typescript": "^5.5.0"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/jowharshamshiri"
+  },
+  "homepage": "https://jowharshamshiri.github.io/interm",
   "keywords": [
     "mcp",
     "terminal",
@@ -56,24 +52,28 @@
     "pty",
     "terminal-automation"
   ],
-  "author": {
-    "name": "Bahram Shamshiri",
-    "email": "jowharshamshiri@gmail.com"
-  },
   "license": "MIT",
+  "main": "dist/server.js",
+  "name": "interm-mcp",
   "repository": {
     "type": "git",
     "url": "https://github.com/jowharshamshiri/interm.git"
   },
-  "bugs": {
-    "url": "https://github.com/jowharshamshiri/interm/issues"
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist/",
+    "dev": "tsx src/server.ts",
+    "format": "prettier --write src/",
+    "lint": "eslint src/",
+    "prepublishOnly": "npm run build",
+    "start": "node dist/server.js",
+    "test": "node tests/run-tests.js",
+    "test:e2e": "node tests/run-tests.js --category e2e",
+    "test:integration": "node tests/run-tests.js --category integration",
+    "test:unit": "node tests/run-tests.js --category unit",
+    "test:verbose": "node tests/run-tests.js --verbose",
+    "test:watch": "node --watch tests/run-tests.js"
   },
-  "homepage": "https://jowharshamshiri.github.io/interm",
-  "funding": {
-    "type": "ko-fi",
-    "url": "https://ko-fi.com/jowharshamshiri"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  }
+  "type": "module",
+  "version": "0.3.23872"
 }
